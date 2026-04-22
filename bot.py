@@ -31,9 +31,11 @@ def reply_message(message_id, content):
 
 
 def call_minimax(message):
-    url = f"https://api.minimax.chat/v1/text/chatcompletion_v2?GroupId={MINIMAX_GROUP_ID}"
+    api_key = os.environ.get("MINIMAX_API_KEY")
+    group_id = os.environ.get("MINIMAX_GROUP_ID", MINIMAX_GROUP_ID)
+    url = f"https://api.minimax.chat/v1/text/chatcompletion_v2?GroupId={group_id}"
     headers = {
-        "Authorization": f"Bearer {MINIMAX_API_KEY}",
+        "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"
     }
     payload = {
