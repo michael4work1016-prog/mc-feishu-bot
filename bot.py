@@ -31,7 +31,7 @@ def reply_message(message_id, content):
 
 
 def call_minimax(message):
-    url = "https://api.minimax.chat/v1/text/chatcompletion_v2"
+    url = f"https://api.minimax.chat/v1/text/chatcompletion_v2?GroupId={MINIMAX_GROUP_ID}"
     headers = {
         "Authorization": f"Bearer {MINIMAX_API_KEY}",
         "Content-Type": "application/json"
@@ -45,6 +45,8 @@ def call_minimax(message):
     }
     resp = requests.post(url, headers=headers, json=payload)
     data = resp.json()
+    if "choices" not in data:
+        raise Exception(f"API返回异常: {data}")
     return data["choices"][0]["message"]["content"]
 
 
